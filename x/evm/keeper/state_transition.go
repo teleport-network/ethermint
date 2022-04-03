@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"fmt"
 	"math"
 	"math/big"
 
@@ -461,6 +462,9 @@ func (k *Keeper) RefundGas(ctx sdk.Context, msg core.Message, leftoverGas uint64
 		// positive amount refund
 		refundedCoins := sdk.Coins{sdk.NewCoin(denom, sdk.NewIntFromBigInt(remaining))}
 
+		fmt.Println("----------------refund gas in ethermint begin------------------")
+		fmt.Println(refundedCoins)
+		fmt.Println("----------------refund gas in ethermint end------------------")
 		// refund to sender from the fee collector module account, which is the escrow account in charge of collecting tx fees
 
 		err := k.bankKeeper.SendCoinsFromModuleToAccount(ctx, authtypes.FeeCollectorName, msg.From().Bytes(), refundedCoins)
